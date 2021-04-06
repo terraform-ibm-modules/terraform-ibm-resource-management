@@ -26,6 +26,7 @@ module "resource-tagging" {
 | resource\_type  | Resource type on which the tags should be attached               | string | n/a     | no       |
 | tag\_names      | Tags for the resource                                            | list   | n/a     | yes      |
 
+
 ## Usage
 
 To run this example you need to execute:
