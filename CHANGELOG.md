@@ -7,4 +7,4 @@ corresponding pull request appended.
 
 ## [1.0.0] - 2021-03-18
 
-This is the initial release of the module, with support for resource group creation.
+This is the initial release of the module, with support for resource group and tags creation.

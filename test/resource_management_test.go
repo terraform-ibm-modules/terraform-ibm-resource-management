@@ -13,10 +13,10 @@ func TestAccIBMCloudResourceGroupCreation(t *testing.T) {
 	// terraform testing.
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		// The path to where our Terraform code is located
-		TerraformDir: "../examples/create-resource-group",
+		TerraformDir: "../",
 
 		Vars: map[string]interface{}{
-			"resource_group_name": "TestRG",
+			"name": "TestRG",
 		},
 	})
 

@@ -1,0 +1,249 @@
+id: "terraform-ibm-modules/resource-management/ibm/1.0.0"
+name: "resource-management"
+namespace: "terraform-ibm-modules"
+version: "1.0.0"
+providers: ["ibm"]
+description: "Terraform modules to create resource group and attach tags to resources"
+source: "https://github.com/terraform-ibm-modules/terraform-ibm-resource-management"
+owner: "umarali.nagoor@in.ibm.com"
+published_at: "2021-11-17T14:54:28.979568Z"
+registry: "https://registry.terraform.io/modules/terraform-ibm-modules/resource-management/ibm/latest"
+alias: "resource-management"
+tags: ["resource", "terraform", "ibm-cloud", "v1.0.0"]
+root:
+  - path: "github.com/terraform-ibm-modules/terraform-ibm-resource-management"
+    name: "resource-management"
+    provider_dependencies:
+      - name: "ibm"
+        namespace: "IBM-Cloud"
+        source: "IBM-Cloud/ibm"
+        version: ""
+###################################
+# input_variables
+###################################
+    inputs:
+      - name: "is_new_resource_group"
+        type: bool
+        is_required: false
+        default_value: true
+        description: "If set to false does not create resource group. Enabled by default"
+        example: true
+        is_sensitive: false
+        related_to: ["ibm_resource_group.resource_group", "data.ibm_resource_group.resource_group"]
+        is_nullable: false
+        is_force_new: true
+        is_provision_controller: true
+        is_count_controller: true
+      - name: "name"
+        type: string
+        is_required: true
+        default_value: "default"
+        description: "Name of the resource group to be created"
+        example: "default"
+        is_sensitive: false
+        related_to: ["ibm_resource_group.resource_group", "data.ibm_resource_group.resource_group"]
+        is_nullable: false
+        is_force_new: true
+        is_provision_controller: false
+        is_count_controller: false
+  ##################################################
+  # resource-tagging variables
+  ##################################################
+      - name: "resource_ids"
+        type: list(string)
+        is_required: false
+        description: "CRNs of the resource on which the tags should be attached"
+        example: ["crn:v1:bluemix:public:cloud-object-storage:global:a/59bcbfa6ea2f006b4ed7094c1a08dcdd:1a0ec336-f391-4091-a6fb-5e084a4c56f4::"]
+        is_sensitive: false
+        related_to: ["ibm_resource_tag.attach_tag"]
+        is_nullable: true
+        is_force_new: false
+        is_provision_controller: true
+        is_count_controller: true
+      - name: "resource_type"
+        type: string
+        is_required: false
+        description: "Resource type on which the tags should be attached"
+        is_sensitive: false
+        related_to: ["ibm_resource_tag.attach_tag"]
+        is_nullable: true
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "tags"
+        type : list(string)
+        is_required: false
+        default_value: ["env:prod"]
+        description: "Tags for the resource"
+        example: ["env:prod"]
+        is_sensitive: false
+        related_to: ["ibm_resource_tag.attach_tag"]
+        is_nullable: true
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+      - name: "tag_type"
+        type: string
+        is_required: false
+        description: "Type of the tag. Only allowed values are: user, or service or access (default value : user)"
+        example: ["user"]
+        is_sensitive: false
+        related_to: ["ibm_resource_tag.attach_tag"]
+        is_nullable: false
+        is_force_new: false
+        is_provision_controller: false
+        is_count_controller: false
+###################################
+# output variables
+###################################
+    outputs:
+      - name: "resource_group_id"
+        type : list(string)
+        description : "Resource group Id's"
+        is_sensitive: false
+        related_to: ["ibm_resource_group.resource_group", "data.ibm_resource_group.resource_group"]
+      - name: "resource_group_name"
+        type : string
+        description : "Resource group name"
+        is_sensitive: false
+        related_to: ["ibm_resource_group.resource_group", "data.ibm_resource_group.resource_group"]
+      - name: "resource_group_crn"
+        type : string
+        description : "Resource group CRN"
+        is_sensitive: false
+        related_to: ["ibm_resource_group.resource_group", "data.ibm_resource_group.resource_group"]
+      - name: "resource_group_state"
+        type : string
+        description : "Resource group state"
+        is_sensitive: false
+        related_to: ["ibm_resource_group.resource_group", "data.ibm_resource_group.resource_group"]
+      - name: "payment_methods_url"
+        type : string
+        description : "The URL to access the payment methods details that is associated with the resource group"
+        is_sensitive: false
+        related_to: ["ibm_resource_group.resource_group", "data.ibm_resource_group.resource_group"]
+      - name: "quota_url"
+        type : string
+        description : "The URL to access the quota details that is associated with the resource group"
+        is_sensitive: false
+        related_to: ["ibm_resource_group.resource_group", "data.ibm_resource_group.resource_group"]
+      - name: "quota_id"
+        type : string
+        description : "An alpha-numeric value identifying the quota ID associated with the resource group"
+        is_sensitive: false
+        related_to: ["ibm_resource_group.resource_group", "data.ibm_resource_group.resource_group"]
+      - name: "resource_ids"
+        type : list(string)
+        description : "CRNs of the resource on which the tags should be attached"
+        example: ["crn:v1:bluemix:public:cloud-object-storage:global:a/59bcbfa6ea2f006b4ed7094c1a08dcdd:1a0ec336-f391-4091-a6fb-5e084a4c56f4::"]
+        is_sensitive: false
+        related_to: ["ibm_resource_tag.attach_tag"]
+      - name: "resource_type"
+        type : string
+        description : "Resource type on which the tags should be attached"
+        is_sensitive: false
+        related_to: ["ibm_resource_tag.attach_tag"]
+    resources:
+      - type: "ibm_resource_group"
+        name: "resource_group"
+        description: "provision resource group"
+        provider: "ibm"
+      - type: "ibm_resource_tag"
+        name: "attach_tag"
+        description: "Attach tags to resources"
+        provider: "ibm"
+    datasources:
+      - type: ibm_resource_group
+        name: "resource_group"
+        description: "Read existing resource group"
+        provider: "ibm"
+###################################
+# List of modules
+###################################
+    modules:
+      - name: "resource-group"
+        id: "terraform-ibm-modules/resource-management/ibm/1.0.0/modules/resource-group"
+        source: "https://github.com/terraform-ibm-modules/terraform-ibm-resource-management/tree/main/modules/resource-group"
+        description: "Used to provision resource group"
+###################################
+# List of sub modules
+###################################
+submodules:
+  - path: "modules/resource-group"
+    name: "resource-group"
+    provider_dependencies:
+      - name: "ibm"
+        namepspace: "IBM-Cloud"
+        source: "IBM-Cloud/ibm"
+        version: "1.36.0"
+    inputs:
+      - name: "is_new_resource_group"
+        type: bool
+        is_required: false
+        default_value: true
+        description: "If set to false does not create resource group. Enabled by default"
+        example: true
+        is_sensitive: false
+        related_to: ["ibm_resource_group.resource_group", "data.ibm_resource_group.resource_group"]
+        is_nullable: false
+        is_force_new: true
+        is_provision_controller: true
+        is_count_controller: true
+      - name: "name"
+        type: string
+        is_required: true
+        default_value: "default"
+        description: "Name of the resource group to be created"
+        example: "default"
+        is_sensitive: false
+        related_to: ["ibm_resource_group.resource_group", "data.ibm_resource_group.resource_group"]
+        is_nullable: false
+        is_force_new: true
+        is_provision_controller: false
+        is_count_controller: false
+    outputs:
+      - name: "resource_group_id"
+        type : list(string)
+        description : "Resource group Id's"
+        is_sensitive: false
+        related_to: ["ibm_resource_group.resource_group", "data.ibm_resource_group.resource_group"]
+      - name: "resource_group_name"
+        type : string
+        description : "Resource group name"
+        is_sensitive: false
+        related_to: ["ibm_resource_group.resource_group", "data.ibm_resource_group.resource_group"]
+      - name: "resource_group_crn"
+        type : string
+        description : "Resource group CRN"
+        is_sensitive: false
+        related_to: ["ibm_resource_group.resource_group", "data.ibm_resource_group.resource_group"]
+      - name: "resource_group_state"
+        type : string
+        description : "Resource group state"
+        is_sensitive: false
+        related_to: ["ibm_resource_group.resource_group", "data.ibm_resource_group.resource_group"]
+      - name: "payment_methods_url"
+        type : string
+        description : "The URL to access the payment methods details that is associated with the resource group"
+        is_sensitive: false
+        related_to: ["ibm_resource_group.resource_group", "data.ibm_resource_group.resource_group"]
+      - name: "quota_url"
+        type : string
+        description : "The URL to access the quota details that is associated with the resource group"
+        is_sensitive: false
+        related_to: ["ibm_resource_group.resource_group", "data.ibm_resource_group.resource_group"]
+      - name: "quota_id"
+        type : string
+        description : "An alpha-numeric value identifying the quota ID associated with the resource group"
+        is_sensitive: false
+        related_to: ["ibm_resource_group.resource_group", "data.ibm_resource_group.resource_group"]
+    resources:
+      - type: "ibm_resource_group"
+        name: "resource_group"
+        description: "provision resource group"
+        provider: "ibm"
+    datasources:
+      - type: ibm_resource_group
+        name: "resource_group"
+        description: "Read existing resource group"
+        provider: "ibm"
