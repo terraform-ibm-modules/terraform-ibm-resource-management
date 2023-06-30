@@ -1,5 +1,20 @@
 # IBM resource-management Terraform Module
 
+---
+
+## Module archived
+
+:spider_web: This repo is no longer maintained and is archived. Use the following public module if you consume the module from GitHub: [terraform-ibm-resource-group](https://github.com/terraform-ibm-modules/terraform-ibm-resource-group)
+
+
+## Changes if you use the Hashicorp registry
+
+:exclamation: **Important:**  This module will be deleted from the Hashicorp registry on 1 August 2023. 
+
+If you  consume the module from the Hashicorp registry, use [resource-group](https://registry.terraform.io/modules/terraform-ibm-modules/resource-group/ibm/latest) instead.
+
+---
+
 This is a collection of modules that make it easier to provision resource management resources on IBM Cloud Platform:
 
 * resource-group
